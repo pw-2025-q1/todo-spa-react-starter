@@ -8,22 +8,14 @@ interface ToolbarProps {
 }
 
 const Toolbar: React.FC<ToolbarProps> = ({ onRefresh, onRemove, onAdd }) => {
-    const handleAddClick = () => {
-        onAdd(); // Notify parent to show the modal
-    };
-
-    const handleRemoveClick = () => {
-        onRemove(); // Notify parent of removal
-    };
-
     return (
         <>
             <div className="px-3 pb-3 border-bottom">
                 <ButtonGroup aria-label="ToDo item actions">
-                    <Button variant="outline-secondary" id="btn-add" onClick={handleAddClick}>
+                    <Button variant="outline-secondary" id="btn-add" onClick={onAdd}>
                         <i className="bi bi-plus-circle"></i>
                     </Button>
-                    <Button variant="outline-secondary" id="btn-remove" onClick={handleRemoveClick}>
+                    <Button variant="outline-secondary" id="btn-remove" onClick={onRemove}>
                         <i className="bi bi-trash"></i>
                     </Button>
                     <Button variant="outline-secondary" id="btn-refresh" onClick={onRefresh}>

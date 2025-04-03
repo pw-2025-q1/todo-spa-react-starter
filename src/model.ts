@@ -46,6 +46,19 @@ class TodoRepository {
         }
     }
 
+    async update(item: TodoItem): Promise<void> {
+        const response = await fetch(`${host}/${ra}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(item),
+        });
+        if (!response.ok) {
+            throw new Error(`Server-side error. Failed to update: ${await response.text()}`);
+        }
+    }
+
     async removeById(id: string): Promise<void> {
         const response = await fetch(`${host}/${ra}/${id}`, {
             method: "DELETE",
@@ -57,7 +70,22 @@ class TodoRepository {
             throw new Error(`Server-side error. Failed to remove: ${await response.text()}`);
         }
     }
-    
+
+    async findById(id: string): Promise<TodoItem> {
+        const response = await fetch(`${host}/${ra}/${id}`);
+
+        if (!response.ok) {
+            throw new Error(`Server-side error. Status: ${await response.text()}`);
+        }
+        
+        const data: TodoServiceDTO = await response.json();
+
+        if (!data.item) {
+            throw new Error(`No item with the given id was found`);
+        }
+
+        return data.item;
+    }
 }
 
 const todoRepository = new TodoRepository();

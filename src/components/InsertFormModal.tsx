@@ -1,24 +1,26 @@
+import React from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { TodoItem } from '../model';
 
-interface FormModalProps {
+interface InsertFormModalProps {
     show: boolean;
-    onHide: () => void;
-    onInsertSuccess: () => void; // Callback to notify parent of successful insert
+    onHide: () => void; // Callback to close the modal
+    onInsert: (item: TodoItem) => void; // Callback to notify parent of form submission
 }
 
-const InsertFormModal: React.FC<FormModalProps> = ({ show, onHide, onInsertSuccess }) => {
-    
-
+const InsertFormModal: React.FC<InsertFormModalProps> = ({ show, onHide, onInsert }) => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // TODO: Handle form submission
-        onInsertSuccess();
+        
+        // TODO: handle form submission
+        
+        onHide(); // Close the modal
     };
 
     return (
         <Modal show={show} onHide={onHide} centered backdrop="static">
             <Modal.Header closeButton>
-                <Modal.Title>Add new item</Modal.Title>
+                <Modal.Title>Add New Item</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form id="item-form" onSubmit={handleSubmit}>
